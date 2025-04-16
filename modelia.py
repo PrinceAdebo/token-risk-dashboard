@@ -130,7 +130,10 @@ def launch_dashboard():
                                          "market_cap", "twitter_followers", "telegram_members",
                                          "token", "target"])
         df_empty.to_csv("dataset_simule.csv", index=False)
-
+    if os.path.exists("dataset_simule.csv"):
+        dataset = pd.read_csv("dataset_simule.csv")
+        if dataset.empty:
+            st.warning("⚠️ Le dataset simulé est vide. Merci d'en générer un avec `prepare_dataset()`.")
 
     st.set_page_config(page_title="Token Risk Monitor", layout="wide")
     st.sidebar.title("📊 Navigation")
