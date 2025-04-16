@@ -108,6 +108,20 @@ def log_prediction(symbol, probability):
 
 # ---------------------- 📊 Streamlit Dashboard ---------------------- #
 def launch_dashboard():
+    import os
+
+        # 🔧 Création du fichier log s'il n'existe pas
+    if not os.path.exists("log_predictions.csv"):
+            with open("log_predictions.csv", "w") as f:
+                f.write("")  # ou écrire un entête : "timestamp,symbol,probability\\n"
+    if not os.path.exists("dataset_simule.csv"):
+        df_empty = pd.DataFrame(columns=["volume_1h", "volume_6h", "volume_24h",
+                                         "rsi_1h", "rsi_6h", "rsi_24h",
+                                         "market_cap", "twitter_followers", "telegram_members",
+                                         "token", "target"])
+        df_empty.to_csv("dataset_simule.csv", index=False)
+
+
     st.set_page_config(page_title="Token Risk Monitor", layout="wide")
     st.sidebar.title("📊 Navigation")
     page = st.sidebar.radio("Accès", ["Historique", "Analyse", "Alertes"])
