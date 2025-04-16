@@ -80,12 +80,22 @@ def prepare_dataset(tokens):
 
 # ---------------------- 🔄 Entraînement du modèle ---------------------- #
 def train_model(df):
+    if df.empty:
+        raise ValueError("🚫 Dataset vide : impossible d'entraîner un modèle.")
+
     X = df.drop(columns=['target', 'token'])
     y = df['target']
+
+    # Vérifier que X contient des colonnes numériques valides
+    if X.select_dtypes(include=[np.number]).shape[1] != X.shape[1]:
+        raise ValueError("🚫 Dataset invalide : toutes les colonnes doivent être numériques.")
+
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
+
     model = xgb.XGBClassifier(use_label_encoder=False, eval_metric='logloss')
     model.fit(X_scaled, y)
+
     return model, scaler
 
 # ---------------------- 🔍 Analyse manuelle ---------------------- #
