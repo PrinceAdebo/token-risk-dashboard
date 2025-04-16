@@ -1,0 +1,10 @@
+streamlit
+pandas
+numpy
+matplotlib
+scikit-learn
+ta
+xgboost
+telepot
+requests
+python-telegram-bot
